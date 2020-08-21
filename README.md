@@ -27,13 +27,13 @@ Running with Tower monitoring (Optional, Recommended):
 - **Ensure Nextflow environment variables are set**
 
 ```bash
-nextflow -n main.nf -c config/default.config -with-tower
+nextflow run main.nf -c config/default.config -with-tower
 ```
 
 Running with without Tower monitoring (No Extra Setup):
 
 ```bash
-nextflow -n main.nf -c config/default.config
+nextflow run main.nf -c config/default.config
 ```
 
 ## Contributing

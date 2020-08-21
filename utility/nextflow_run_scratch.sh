@@ -7,7 +7,6 @@
 #SBATCH -c 4
 #SBATCH --mem=16gb
 #SBATCH --time=23:59:59
-#SBATCH -D /home/joribello/nextflow_workflows
 # #SBATCH --test-only
 
 export TOWER_ACCESS_TOKEN=7e38ad64660cf92608d67a9425562bc55722d54c

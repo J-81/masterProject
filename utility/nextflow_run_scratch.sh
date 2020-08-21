@@ -14,4 +14,4 @@ export TOWER_ACCESS_TOKEN=7e38ad64660cf92608d67a9425562bc55722d54c
 export NXF_VER=20.07.1
 
 
-./nextflow run main.nf -profile sjsu_slurm -c config/dataset_v1.config -resume -with-tower --limiter -1 -w /gpfs/scratch/joribello/work2
+nextflow -n main.nf -c config/default.config -with-tower -w '../workdirs/GLDS-104' -resume -profile cos_hpc_4_node

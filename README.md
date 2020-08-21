@@ -10,12 +10,12 @@ Ensure Conda is installed and available (tested with Conda 4.8.3):
 Clone repository, depth is set to only get the a shallow copy.
 
 ```bash
-git clone --depth=1 https://github.com/J-81/masterProject.git & cd masterProject
+git clone --depth=1 https://github.com/J-81/masterProject.git && cd masterProject
 ```
 
-Create conda environment using package main environment file
+Create conda environment using package main environment file and activate
 ```bash
-conda env create -f envs/main.yml
+conda env create -f envs/main.yml && conda activate main
 ```
 
 

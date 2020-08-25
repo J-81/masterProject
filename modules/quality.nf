@@ -5,7 +5,7 @@
 
 process FASTQC {
   conda 'envs/fastqc.yml'
-  cpus { read.length } // number of read files to process
+  cpus { read.size() } // number of read files to process
   storeDir "${params.storeDirPath}/fastqc"
 
   input:

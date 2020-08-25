@@ -23,6 +23,6 @@ workflow {
 	main:
     GET_DATA( samples_ch ) | FASTQC
 
-    FASTQC.out | map { it -> [ it[1], it[2] ] } | flatten | collect | MULTIQC | view
+    FASTQC.out | map { it -> [ it[1], it[2] ] } | flatten | collect | view
 
 }

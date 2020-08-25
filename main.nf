@@ -3,6 +3,7 @@ nextflow.enable.dsl=2
 include { DOWNLOAD_RAW_READS } from './modules/download.nf'
 include { FASTQC } from './modules/quality.nf'
 
+
 samples_ch = Channel.fromList( params.samples )
                     .take( params.limiter )
 
@@ -20,13 +21,6 @@ workflow GET_DATA {
 
 workflow {
 	main:
-    GET_DATA( samples_ch ) | multiMap { it ->
-                                        forward: [ it[0], it[1] ]
-                                        reverse: [ it[0], it[2] ]
-                                        }
-                            | set { reads }
-
-    reads.forward | view
-    reads.reverse | view
+    GET_DATA( samples_ch ) | FASTQC | view
 
 }

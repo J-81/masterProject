@@ -10,7 +10,7 @@ process DOWNLOAD_RAW_READS {
   input:
     val(sample)
   output:
-    tuple val(sample), path("${sample}_R1_raw.fastq.gz"), path("${sample}_R2_raw.fastq.gz"), emit: raw_reads
+    tuple val(sample), path("${sample}_R?_raw.fastq.gz"), emit: raw_reads
   script:
     """
     wget --no-check-certificate --quiet \

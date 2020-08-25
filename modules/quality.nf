@@ -6,16 +6,17 @@
 process FASTQC {
   conda 'envs/fastqc.yml'
   label 'cpuBound'
+  storeDir "${params.storeDirPath}/fastqc"
 
   input:
-    tuple val(sample), path(raw_read)
+    tuple val(sample), path(read)
   output:
-    tuple val(sample), path("${raw_read.simpleName}.fastqc.html"), path("${raw_read.simpleName}.fastqc.zip")
+    tuple val(sample), path("*.fastqc.html"), path("*.fastqc.zip")
   script:
     """
     fastqc -o . \
      -t $task.cpus \
-      $raw_read
+      $read
     """
 
 }

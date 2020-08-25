@@ -11,7 +11,7 @@ process FASTQC {
   input:
     tuple val(sample), path(read)
   output:
-    tuple val(sample), "${ read.SimpleName }_fastqc.html", "${ read.SimpleName }_fastqc.zip"
+    tuple val(sample), path("*_fastqc.html"), path("*_fastqc.zip")
   script:
     """
     fastqc -o . \

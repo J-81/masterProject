@@ -1,7 +1,7 @@
 nextflow.enable.dsl=2
 
 include { DOWNLOAD_RAW_READS } from './modules/download.nf'
-include { FASTQC } from './modules/quality.nf'
+include { FASTQC; MULTIQC } from './modules/quality.nf'
 
 
 samples_ch = Channel.fromList( params.samples )
@@ -21,6 +21,8 @@ workflow GET_DATA {
 
 workflow {
 	main:
-    GET_DATA( samples_ch ) | FASTQC | view
+    GET_DATA( samples_ch ) | FASTQC
+
+    FASTQC.out | map { it[1], it[2] } | collect | MULTIQC | view
 
 }

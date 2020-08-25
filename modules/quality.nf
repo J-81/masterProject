@@ -29,7 +29,7 @@ process MULTIQC {
   input:
     path(fastqc) // any number of fastqc files
   output:
-    path("raw_multiqc_report")
+    path("raw_multiqc_report.html")
   script:
     """
     multiqc -n raw_multiqc_report .

@@ -25,8 +25,8 @@ workflow {
 
     FASTQC.out | map { it -> [ it[1], it[2] ] } \
                | flatten \
+               | unique \
                | collect \
-               | distinct \
                | MULTIQC \
                | view
 

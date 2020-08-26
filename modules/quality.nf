@@ -44,7 +44,7 @@ process TRIMGALORE {
   input:
     tuple val(sample), path(forward_read), path(reverse_read)
   output:
-    tuple val(sample), path(forward_read), path(reverse_read), path("trimming_report.txt")
+    tuple val(sample), path(forward_read), path(reverse_read), path("${ forward_read }_trimming_report.txt"), path("${ reverse_read }_trimming_report.txt")
   script:
     /*
      * comments -> --ilumina # if adapters are not illumina, replace with adapters

@@ -24,7 +24,7 @@ process FASTQC {
 process MULTIQC {
   label "fastLocal"
   conda 'envs/multiqc.yml'
-  storeDir "${params.storeDirPath}/multiQC"
+  publishDir "${params.publishDirPath}/multiQC/${params.multiQCLabel}"
 
   input:
     path(fastqc) // any number of fastqc files

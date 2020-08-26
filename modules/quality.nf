@@ -36,3 +36,21 @@ process MULTIQC {
     """
 
 }
+
+process TRIMGALORE {
+  conda 'envs/trim_galore.yml'
+  label "fastLocal"
+
+  input:
+    tuple val(sample), path(forward_read), path(reverse_read)
+  output:
+    tuple val(sample), path(forward_read), path(reverse_read), path("trimming_report.txt")
+  script:
+    """
+    trim_galore --gzip \
+    --illumina \ # if adapters are not illumina, replace with adapters
+    --phred33 \
+    --paired $forward_read $reverse_read \ # only for PE studies
+    --output_dir . \ # if SE, replace the last line with only /path/to/forward/reads
+    """
+}

@@ -24,7 +24,7 @@ workflow GET_DATA {
 
 workflow {
 	main:
-    GET_DATA( samples_ch ) | FASTQC
+    GET_DATA( samples_ch ) | RAW_FASTQC
 
     RAW_FASTQC.out | map { it -> [ it[1], it[2] ] } \
                    | flatten \

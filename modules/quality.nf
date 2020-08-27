@@ -39,7 +39,7 @@ process MULTIQC {
 
 process TRIMGALORE {
   conda 'envs/trim_galore.yml'
-  label "fastLocal"
+  cpus 4
 
   input:
     tuple val(sample), path(forward_read), path(reverse_read)
@@ -52,6 +52,7 @@ process TRIMGALORE {
      */
     """
     trim_galore --gzip \
+    --cores $task.cpus \
     --illumina \
     --phred33 \
     --paired $forward_read $reverse_read \

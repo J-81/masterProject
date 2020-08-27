@@ -56,6 +56,6 @@ process TRIMGALORE {
     --illumina \
     --phred33 \
     --paired $forward_read $reverse_read \
-    --output_dir .
+    --output_dir . 
     """
 }

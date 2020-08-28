@@ -39,14 +39,14 @@ process DOWNLOAD_GENOME_ANNOTATIONS {
     wget --no-check-certificate --quiet \
     -O Mus_musculus.GRCm38.dna.toplevel.fa.gz \
     ftp://ftp.ensembl.org/pub/release-${ params.ensembl_version }/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz \
-    & \
-    guzip Mus_musculus.GRCm38.dna.toplevel.fa.gz \
-    & \
+    && \
+    gunzip Mus_musculus.GRCm38.dna.toplevel.fa.gz \
+    && \
     wget --no-check-certificate --quiet \
     -O Mus_musculus.GRCm38.${ params.ensembl_version }.gtf.gz \
     ftp://ftp.ensembl.org/pub/release-${ params.ensembl_version }/gtf/mus_musculus/Mus_musculus.GRCm38.${ params.ensembl_version }.gtf.gz \
-    & \
-    guzip Mus_musculus.GRCm38.${ params.ensembl_version }.gtf.gz \
+    && \
+    gunzip Mus_musculus.GRCm38.${ params.ensembl_version }.gtf.gz \
 
     """
 }

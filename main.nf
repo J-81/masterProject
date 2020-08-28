@@ -1,6 +1,7 @@
 nextflow.enable.dsl=2
 
-include { DOWNLOAD_RAW_READS } from './modules/download.nf'
+include { DOWNLOAD_RAW_READS;
+          DOWNLOAD_GENOME_ANNOTATIONS } from './modules/download.nf'
 include { FASTQC as RAW_FASTQC } from './modules/quality.nf'
 include { FASTQC as TRIM_FASTQC } from './modules/quality.nf'
 include { MULTIQC as RAW_MULTIQC } from './modules/quality.nf' addParams(multiQCLabel: 'raw')
@@ -43,5 +44,7 @@ workflow {
                     | collect \
                     | TRIM_MULTIQC \
                     | view
+
+    DOWNLOAD_GENOME_ANNOTATIONS
 
 }

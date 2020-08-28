@@ -33,7 +33,9 @@ workflow {
                    | RAW_MULTIQC \
                    | view
 
-    GET_DATA.out | map{ it -> [ it[0], it[1][0], it[1][1] ] } | TRIMGALORE | TRIM_FASTQC
+    GET_DATA.out | map{ it -> [ it[0], it[1][0], it[1][1] ] } | TRIMGALORE
+
+    TRIMGALORE.out.reads | map{ it -> [ it[0], [ it[1], it[2] ] ]} | TRIM_FASTQC
 
     TRIM_FASTQC.out | map { it -> [ it[1], it[2] ] } \
                     | flatten \

@@ -46,10 +46,6 @@ workflow {
                     | TRIM_MULTIQC \
                     | view
 
-<<<<<<< HEAD
-    DOWNLOAD_GENOME_ANNOTATIONS | view
-=======
     DOWNLOAD_GENOME_ANNOTATIONS | BUILD_STAR | view
->>>>>>> 49175f75bc933d5d0ff07a14cd2ded933fc2c660
 
 }

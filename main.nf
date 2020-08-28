@@ -7,6 +7,7 @@ include { FASTQC as TRIM_FASTQC } from './modules/quality.nf'
 include { MULTIQC as RAW_MULTIQC } from './modules/quality.nf' addParams(multiQCLabel: 'raw')
 include { MULTIQC as TRIM_MULTIQC } from './modules/quality.nf' addParams(multiQCLabel: 'trimmed')
 include { TRIMGALORE } from './modules/quality.nf'
+include { BUILD_STAR } from './modules/genome.nf'
 
 samples_ch = Channel.fromList( params.samples )
                     .take( params.limiter )
@@ -45,6 +46,10 @@ workflow {
                     | TRIM_MULTIQC \
                     | view
 
+<<<<<<< HEAD
     DOWNLOAD_GENOME_ANNOTATIONS | view
+=======
+    DOWNLOAD_GENOME_ANNOTATIONS | BUILD_STAR | view
+>>>>>>> 49175f75bc933d5d0ff07a14cd2ded933fc2c660
 
 }

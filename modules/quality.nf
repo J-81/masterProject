@@ -6,7 +6,7 @@
 process FASTQC {
   conda 'envs/fastqc.yml'
   cpus { read.size() } // number of read files to process
-  storeDir "${params.storeDirPath}/fastqc"
+  //storeDir "${params.storeDirPath}/fastqc"
 
   input:
     tuple val(sample), path(read)

@@ -45,6 +45,6 @@ workflow {
                     | TRIM_MULTIQC \
                     | view
 
-    DOWNLOAD_GENOME_ANNOTATIONS
+    DOWNLOAD_GENOME_ANNOTATIONS | view
 
 }

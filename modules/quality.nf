@@ -44,7 +44,8 @@ process TRIMGALORE {
   input:
     tuple val(sample), path(forward_read), path(reverse_read)
   output:
-    tuple val(sample), path("${ forward_read.simpleName }_val_1.fq.gz"), path("${ reverse_read.simpleName }_val_2.fq.gz"), path("${ forward_read }_trimming_report.txt"), path("${ reverse_read }_trimming_report.txt")
+    tuple val(sample), path("${ forward_read.simpleName }_val_1.fq.gz"), path("${ reverse_read.simpleName }_val_2.fq.gz"), emit: reads
+    tuple val(sample), path("${ forward_read }_trimming_report.txt"), path("${ reverse_read }_trimming_report.txt"), emit: trim_reports
   script:
     /*
      * comments -> --ilumina # if adapters are not illumina, replace with adapters
@@ -56,6 +57,6 @@ process TRIMGALORE {
     --illumina \
     --phred33 \
     --paired $forward_read $reverse_read \
-    --output_dir . 
+    --output_dir .
     """
 }

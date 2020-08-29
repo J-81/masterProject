@@ -9,7 +9,7 @@ process BUILD_STAR {
   input:
     tuple path(genomeFasta), path(genomeGtf)
   output:
-    path("STAR_REF/*")
+    path("STAR_REF")
   script:
     """
 STAR --runThreadN ${task.cpus} \
@@ -34,14 +34,12 @@ process ALIGN_STAR {
   label 'maxCPU'
 
   input:
-    tuple path(STAR_INDEX_DIR), val(sampleID), path(forward_read), path(reverse_read)
+    tuple val(sampleID), path(forward_read), path(reverse_read), path(STAR_INDEX_DIR)
   output:
     tuple val(sampleID), \
-          path("${ forward_read.simpleName }Aligned.sortedByCoord.out.bam"), \
-          path("${ reverse_read.simpleName }Aligned.sortedByCoord.out.bam"), emit: genomeMapping \
+          path("${ sampleID }Aligned.sortedByCoord.out.bam"), emit: genomeMapping 
     tuple val(sampleID), \
-          path("${ forward_read.simpleName }Aligned.toTranscriptome.out.bam"), \
-          path("${ reverse_read.simpleName }Aligned.toTranscriptome.out.bam"), emit:transcriptomeMapping
+          path("${ sampleID }Aligned.toTranscriptome.out.bam"), emit: transcriptomeMapping
   script:
     """
     STAR --twopassMode Basic \

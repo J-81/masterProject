@@ -49,6 +49,8 @@ workflow {
 
     DOWNLOAD_GENOME_ANNOTATIONS | BUILD_STAR
 
-    TRIMGALORE.out.reads | combine( BUILD_STAR ) | ALIGN_STAR | view
+    TRIMGALORE.out.reads | combine( BUILD_STAR.out ) | ALIGN_STAR
+
+    ALIGN_STAR.out.transcriptomeMapping | view 
 
 }

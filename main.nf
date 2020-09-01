@@ -8,7 +8,8 @@ include { MULTIQC as RAW_MULTIQC } from './modules/quality.nf' addParams(multiQC
 include { MULTIQC as TRIM_MULTIQC } from './modules/quality.nf' addParams(multiQCLabel: 'trimmed')
 include { TRIMGALORE } from './modules/quality.nf'
 include { BUILD_STAR;
-          ALIGN_STAR } from './modules/genome.nf'
+          ALIGN_STAR;
+          BUILD_RSEM } from './modules/genome.nf'
 
 samples_ch = Channel.fromList( params.samples )
                     .take( params.limiter )
@@ -51,6 +52,8 @@ workflow {
 
     TRIMGALORE.out.reads | combine( BUILD_STAR.out ) | ALIGN_STAR
 
-    ALIGN_STAR.out.transcriptomeMapping | view 
+    ALIGN_STAR.out.transcriptomeMapping | view
+
+    BUILD_RSEM | view
 
 }

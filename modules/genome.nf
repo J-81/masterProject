@@ -73,10 +73,34 @@ process BUILD_RSEM {
   input:
     tuple path(genomeFasta), path(genomeGtf)
   output:
-    path("RSEM_REF*")
+    path("RSEM_REF")
   script:
     """
-rsem-prepare-reference --gtf $genomeGtf $genomeFasta RSEM_REF
+    rsem-prepare-reference --gtf $genomeGtf $genomeFasta RSEM_REF/
+    """
+
+}
+
+process COUNT_ALIGNED {
+  conda 'envs/rsem.yml'
+
+  input:
+    tuple val(sampleID), path(transcriptomeMapping), path(RSEM_REF)
+  output:
+    path("RSEM_OUT/*")
+  script:
+    """
+    rsem-calculate-expression --num-threads NumberOfThreads \
+      --paired-end \
+      --bam \
+      --alignments \
+      --no-bam-output \
+      --estimate-rspd \
+      --seed 12345 \
+      --strandedness reverse \
+      $transcriptomeMapping \
+      $RSEM_REF \
+      RSEM_OUT
     """
 
 }

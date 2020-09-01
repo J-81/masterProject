@@ -9,7 +9,8 @@ include { MULTIQC as TRIM_MULTIQC } from './modules/quality.nf' addParams(multiQ
 include { TRIMGALORE } from './modules/quality.nf'
 include { BUILD_STAR;
           ALIGN_STAR;
-          BUILD_RSEM } from './modules/genome.nf'
+          BUILD_RSEM;
+          COUNT_ALIGNED } from './modules/genome.nf'
 
 samples_ch = Channel.fromList( params.samples )
                     .take( params.limiter )
@@ -54,6 +55,10 @@ workflow {
 
     ALIGN_STAR.out.transcriptomeMapping | view
 
-    DOWNLOAD_GENOME_ANNOTATIONS.out | BUILD_RSEM | view
+    DOWNLOAD_GENOME_ANNOTATIONS.out | BUILD_RSEM
+
+    ALIGN_STAR.out.transcriptomeMapping | combine( BUILD_RSEM.out ) | set { aligned_ch }
+    aligned_ch | view
+    aligned_ch | COUNT_ALIGNED
 
 }

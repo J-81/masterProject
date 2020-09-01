@@ -76,6 +76,7 @@ process BUILD_RSEM {
     path("RSEM_REF")
   script:
     """
+    mkdir RSEM_REF
     rsem-prepare-reference --gtf $genomeGtf $genomeFasta RSEM_REF/
     """
 

@@ -37,7 +37,7 @@ process ALIGN_STAR {
     tuple val(sampleID), path(forward_read), path(reverse_read), path(STAR_INDEX_DIR)
   output:
     tuple val(sampleID), \
-          path("${ sampleID }Aligned.sortedByCoord.out.bam"), emit: genomeMapping 
+          path("${ sampleID }Aligned.sortedByCoord.out.bam"), emit: genomeMapping
     tuple val(sampleID), \
           path("${ sampleID }Aligned.toTranscriptome.out.bam"), emit: transcriptomeMapping
   script:
@@ -63,6 +63,21 @@ process ALIGN_STAR {
     --quantMode TranscriptomeSAM \
     --outFileNamePrefix ${ sampleID } \
     --readFilesIn ${ forward_read } ${ reverse_read }
+    """
+
+}
+
+process BUILD_RSEM {
+  conda 'envs/rsem.yml'
+  label 'maxCPU'
+
+  input:
+    tuple path(genomeFasta), path(genomeGtf)
+  output:
+    path("RSEM_REF")
+  script:
+    """
+rsem-prepare-reference --gtf $genomeGtf $genomeFasta RSEM_REF
     """
 
 }

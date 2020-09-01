@@ -69,12 +69,11 @@ process ALIGN_STAR {
 
 process BUILD_RSEM {
   conda 'envs/rsem.yml'
-  label 'maxCPU'
 
   input:
     tuple path(genomeFasta), path(genomeGtf)
   output:
-    path("RSEM_REF")
+    path("RSEM_REF*")
   script:
     """
 rsem-prepare-reference --gtf $genomeGtf $genomeFasta RSEM_REF

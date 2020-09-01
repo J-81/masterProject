@@ -54,6 +54,6 @@ workflow {
 
     ALIGN_STAR.out.transcriptomeMapping | view
 
-    BUILD_RSEM | view
+    DOWNLOAD_GENOME_ANNOTATIONS.out | BUILD_RSEM | view
 
 }

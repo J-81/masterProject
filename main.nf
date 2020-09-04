@@ -11,6 +11,7 @@ include { BUILD_STAR;
           ALIGN_STAR;
           BUILD_RSEM;
           COUNT_ALIGNED } from './modules/genome.nf'
+include { DGE_BY_DESEQ2 } from './modules/dge.nf'
 
 samples_ch = Channel.fromList( params.samples )
                     .take( params.limiter )
@@ -60,5 +61,12 @@ workflow {
     ALIGN_STAR.out.transcriptomeMapping | combine( BUILD_RSEM.out ) | set { aligned_ch }
     aligned_ch | view
     aligned_ch | COUNT_ALIGNED
+
+    COUNT_ALIGNED.out.countsPerGene | map { it[1] } | collect | set { rsem_ch }
+
+    external_ch = channel.from(path("external/GLDS-104_metadata_GLDS-104-ISA.zip"), path("external/organisms.csv"))
+    external_ch | combine( rsem_ch ) | set { for_dge_ch }
+    for_dge_ch | view
+    for_dge_ch | combine(DGE_BY_DESEQ2
 
 }

@@ -25,6 +25,6 @@ process DGE_BY_DESEQ2 {
     mkdir dge_output
 
     # run the script with R
-    r -f GLDS-104_norm_DGE_analysis.R
+    GLDS-104-norm_DGE_analysis.R
     """
 }

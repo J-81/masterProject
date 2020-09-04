@@ -64,9 +64,12 @@ workflow {
 
     COUNT_ALIGNED.out.countsPerGene | map { it[1] } | collect | set { rsem_ch }
 
-    external_ch = channel.from(path("external/GLDS-104_metadata_GLDS-104-ISA.zip"), path("external/organisms.csv"))
+    isa_ch = channel.fromPath("external/GLDS-104_metadata_GLDS-104-ISA.zip")
+    organism_ch = channel.fromPath("external/organisms.csv")
+    external_ch = isa_ch.mix(organism_ch)
+
     external_ch | combine( rsem_ch ) | set { for_dge_ch }
     for_dge_ch | view
-    for_dge_ch | combine(DGE_BY_DESEQ2
+    for_dge_ch | DGE_BY_DESEQ2
 
 }

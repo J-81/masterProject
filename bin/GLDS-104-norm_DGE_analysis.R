@@ -1,8 +1,17 @@
+#! /usr/bin/env Rscript
+
+
+# Set default cran mirror
+local({r <- getOption("repos")
+       r["CRAN"] <- "http://cran.r-project.org"
+       options(repos=r)})
+
+
 #install libraries if not already installed
 install.packages("tidyverse")
-source("https://bioconductor.org/biocLite.R")
-if (!requireNamespace("BiocManager", quietly = TRUE))
-install.packages("BiocManager")
+#source("https://bioconductor.org/biocLite.R")
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#install.packages("BiocManager")
 BiocManager::install("tximport")
 BiocManager::install("DESeq2")
 BiocManager::install("Risa")
@@ -29,7 +38,7 @@ library(Risa)
 
 # define organism and input/output directories
 organism <- "Mus musculus"
-metadata_dir="/path/to/directory/containing/ISA.zip/file"
+metadata_dir="."
 work_dir="."
 counts_dir="RSEM_GENE_COUNTS"
 norm_output="norm_counts_output"

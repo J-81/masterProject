@@ -47,26 +47,23 @@ workflow {
                     | flatten \
                     | unique \
                     | collect \
-                    | TRIM_MULTIQC \
-                    | view
+                    | TRIM_MULTIQC
 
     DOWNLOAD_GENOME_ANNOTATIONS | BUILD_STAR
 
     TRIMGALORE.out.reads | combine( BUILD_STAR.out ) | ALIGN_STAR
 
-    ALIGN_STAR.out.transcriptomeMapping | view
 
     DOWNLOAD_GENOME_ANNOTATIONS.out | BUILD_RSEM
 
     ALIGN_STAR.out.transcriptomeMapping | combine( BUILD_RSEM.out ) | set { aligned_ch }
-    aligned_ch | view
     aligned_ch | COUNT_ALIGNED
 
-    COUNT_ALIGNED.out.countsPerGene | map { it[1] } | collect | set { rsem_ch }
+    COUNT_ALIGNED.out.countsPerGene | map { it[1] } | collect | toList | set { rsem_ch }
 
     isa_ch = channel.fromPath("external/GLDS-104_metadata_GLDS-104-ISA.zip")
     organism_ch = channel.fromPath("external/organisms.csv")
-    external_ch = isa_ch.mix(organism_ch)
+    external_ch = isa_ch.combine( organism_ch )
 
     external_ch | combine( rsem_ch ) | set { for_dge_ch }
     for_dge_ch | view

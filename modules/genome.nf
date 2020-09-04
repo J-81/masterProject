@@ -88,10 +88,12 @@ process COUNT_ALIGNED {
   input:
     tuple val(sampleID), path(transcriptomeMapping), path(RSEM_REF)
   output:
-    path("RSEM_OUT/*")
+    tuple val(sampleID), path("${ sampleID }.genes.results"), emit: countsPerGene
+    tuple val(sampleID), path("${ sampleID }.isoforms.results"), emit: countsPerIsoform
+    tuple val(sampleID), path("${ sampleID }.stat"), emit: stats
   script:
     """
-    rsem-calculate-expression --num-threads NumberOfThreads \
+    rsem-calculate-expression --num-threads $task.cpus \
       --paired-end \
       --bam \
       --alignments \
@@ -100,8 +102,8 @@ process COUNT_ALIGNED {
       --seed 12345 \
       --strandedness reverse \
       $transcriptomeMapping \
-      $RSEM_REF \
-      RSEM_OUT
+      $RSEM_REF/ \
+      $sampleID
     """
 
 }

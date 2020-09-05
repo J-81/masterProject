@@ -133,6 +133,7 @@ summary(dds)
 
 ##### generate a DESeqDataSet object using only non-ERCC genes
 #dds_1 <- dds[-c(ercc_rows),] # remove ERCCs from full counts table
+dds_1 <- dds # no ERCC, but easiest way to keep code working
 #dds_2 <- dds_1
 
 # replace size factor object with ERCC size factors for rescaling
@@ -162,8 +163,8 @@ normCounts <- normCounts +1
 dds_1_lrt <- DESeq(dds_1, test = "LRT", reduced = ~ 1)
 res_1_lrt <- results(dds_1_lrt)
 
-dds_2_lrt <- DESeq(dds_2, test = "LRT", reduced = ~ 1)
-res_2_lrt <- results(dds_2_lrt)
+#dds_2_lrt <- DESeq(dds_2, test = "LRT", reduced = ~ 1)
+#res_2_lrt <- results(dds_2_lrt)
 
 # import table with organism db objects for annotation
 organism_table <- read.csv(file.path(work_dir,"organisms.csv"))

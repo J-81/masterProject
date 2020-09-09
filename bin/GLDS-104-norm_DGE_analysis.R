@@ -40,9 +40,9 @@ library(Risa)
 ##### For datasets without ERCC spike-in, skip all ERCC commands #####
 
 # define organism and input/output directories
-organism <- "Mus musculus"
-metadata_dir="."
-work_dir="."
+organism <- "MOUSE"
+metadata_dir="metaDir"
+work_dir="workDir"
 counts_dir="RSEM_GENE_COUNTS"
 norm_output="norm_counts_output"
 DGE_output="dge_output"

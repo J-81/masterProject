@@ -16,11 +16,19 @@ process DGE_BY_DESEQ2 {
     tuple path("Unnormalized_Counts.csv"), path("Normalized_Counts.csv")
   script:
     """
-    # create rsem counts directory and move them into it
-    mkdir RSEM_GENE_COUNTS
-    mv $Rsem_gene_counts RSEM_GENE_COUNTS
+    # create working directory
+    mkdir workDir
 
-    # create output directories
+    # create rsem counts directory and move them into it
+    mkdir workDir/RSEM_GENE_COUNTS
+    mv $Rsem_gene_counts workDir/RSEM_GENE_COUNTS
+
+    # create metadata dir and move metadata in
+    mkdir workDir/metaDir
+    mv $ISA_zip $organisms_csv workDir/metaDir
+
+    # cd into workdir and create output directories
+    cd workDir
     mkdir norm_counts_output
     mkdir dge_output
 

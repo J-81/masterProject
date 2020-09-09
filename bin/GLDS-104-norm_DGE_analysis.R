@@ -7,6 +7,9 @@ local({r <- getOption("repos")
        options(repos=r)})
 
 
+# debugging
+options(error = traceback)
+
 #install libraries if not already installed
 install.packages("tidyverse")
 #source("https://bioconductor.org/biocLite.R")
@@ -142,7 +145,7 @@ dds_1 <- dds # no ERCC, but easiest way to keep code working
 #### Perform DESeq analysis
 #dds_2 <- estimateDispersions(dds_2)
 #dds_2 <- nbinomWaldTest(dds_2)
-#dds_1 <- DESeq(dds_1)
+dds_1 <- DESeq(dds_1)
 
 ##### export unnormalized, normalized, and ERCC normalized counts
 normCounts = as.data.frame(counts(dds_1, normalized=TRUE))

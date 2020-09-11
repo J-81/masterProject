@@ -13,7 +13,13 @@ process DGE_BY_DESEQ2 {
   input:
     tuple path(ISA_zip), path(organisms_csv), path(Rsem_gene_counts)
   output:
-    tuple path("Unnormalized_Counts.csv"), path("Normalized_Counts.csv")
+    tuple path("norm_counts_output/Normalized_Counts.csv"), 
+          path("norm_counts_output/SampleTable.csv"), 
+          path("norm_counts_output/Unnormalized_Counts.csv"), emit: norm_counts
+    tuple path("dge_output/contrasts.csv"), 
+          path("dge_output/differential_expression.csv"),
+          path("dge_output/visualization_output_table.csv"),
+          path("dge_output/visualization_PCA_table.csv"), emit: dge
   script:
     """
     # create rsem counts directory and move them into it

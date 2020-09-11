@@ -8,7 +8,7 @@ local({r <- getOption("repos")
 
 
 # debugging
-options(error = traceback)
+#options(error = traceback)
 
 #install libraries if not already installed
 install.packages("tidyverse")
@@ -41,11 +41,11 @@ library(Risa)
 
 # define organism and input/output directories
 organism <- "MOUSE"
-metadata_dir="metaDir"
-work_dir="workDir"
-counts_dir="RSEM_GENE_COUNTS"
-norm_output="norm_counts_output"
-DGE_output="dge_output"
+metadata_dir=file.path(getwd(),"metaDir")
+work_dir=getwd()
+counts_dir=file.path(getwd(),"RSEM_GENE_COUNTS")
+norm_output=file.path(getwd(),"norm_counts_output")
+DGE_output=file.path(getwd(),"dge_output")
 #NO ERCC in GLDS 104 : DGE_output_ERCC="/path/to/ERCC-normalized/DGE/output/directory"
 
 setwd(file.path(metadata_dir))

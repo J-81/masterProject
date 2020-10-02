@@ -4,7 +4,7 @@
  */
 
 process FASTQC {
-  conda 'envs/fastqc.yml'
+  conda "${baseDir}/envs/fastqc.yml"
   cpus { read.size() } // number of read files to process
   //storeDir "${params.storeDirPath}/fastqc"
 
@@ -23,7 +23,7 @@ process FASTQC {
 
 process MULTIQC {
   label "fastLocal"
-  conda 'envs/multiqc.yml'
+  conda "${baseDir}/envs/multiqc.yml"
   publishDir "${params.publishDirPath}/multiQC/${params.multiQCLabel}"
 
   input:
@@ -38,7 +38,7 @@ process MULTIQC {
 }
 
 process TRIMGALORE {
-  conda 'envs/trim_galore.yml'
+  conda "${baseDir}/envs/trim_galore.yml"
   cpus 4
 
   input:

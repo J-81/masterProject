@@ -3,7 +3,7 @@
  */
 
 process BUILD_STAR {
-  conda 'envs/star.yml'
+  conda "${baseDir}/envs/star.yml"
   label 'maxCPU'
 
   input:
@@ -30,7 +30,7 @@ STAR --runThreadN ${task.cpus} \
 
 
 process ALIGN_STAR {
-  conda 'envs/star.yml'
+  conda "${baseDir}/envs/star.yml"
   label 'maxCPU'
 
   input:
@@ -68,7 +68,7 @@ process ALIGN_STAR {
 }
 
 process BUILD_RSEM {
-  conda 'envs/rsem.yml'
+  conda "${baseDir}/envs/rsem.yml"
 
   input:
     tuple path(genomeFasta), path(genomeGtf)
@@ -83,7 +83,7 @@ process BUILD_RSEM {
 }
 
 process COUNT_ALIGNED {
-  conda 'envs/rsem.yml'
+  conda "${baseDir}/envs/rsem.yml"
 
   input:
     tuple val(sampleID), path(transcriptomeMapping), path(RSEM_REF)

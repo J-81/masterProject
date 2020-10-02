@@ -14,7 +14,7 @@ process BUILD_STAR {
     """
 STAR --runThreadN ${task.cpus} \
 --runMode genomeGenerate \
---limitGenomeGenerateRAM 35000000000 \
+--limitGenomeGenerateRAM 10000000000 \
 --genomeSAindexNbases 14 \
 --genomeDir STAR_REF \
 --genomeFastaFiles ${ genomeFasta } \

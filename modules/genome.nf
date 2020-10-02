@@ -4,6 +4,7 @@
 
 process BUILD_STAR {
   conda "${baseDir}/envs/star.yml"
+  storeDir "${params.storeDirPath}/STAR_${ params.ensembl_version }"
   label 'maxCPU'
 
   input:
@@ -69,6 +70,7 @@ process ALIGN_STAR {
 
 process BUILD_RSEM {
   conda "${baseDir}/envs/rsem.yml"
+  storeDir "${params.storeDirPath}/RSEM_${ params.ensembl_version }"
 
   input:
     tuple path(genomeFasta), path(genomeGtf)

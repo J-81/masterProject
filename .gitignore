@@ -1,6 +1,0 @@
-*__pycache__*
-tmp/*
-.nextflow.log*
-.nextflow
-secrets/*
-slurm_logs/*

@@ -49,12 +49,18 @@ workflow {
                     | collect \
                     | TRIM_MULTIQC
 
-    DOWNLOAD_GENOME_ANNOTATIONS | BUILD_STAR
+    if ( params.genomeFasta && params.genomeGTF ) {
+      genome_annotations = channel.fromPath([ params.genomeFasta, params.genomeGTF ])
+                                  .toList()
+    } else {
+      DOWNLOAD_GENOME_ANNOTATIONS | set { genome_annotations }
+    }
+    genome_annotations | view
+    genome_annotations | BUILD_STAR
 
     TRIMGALORE.out.reads | combine( BUILD_STAR.out ) | ALIGN_STAR
 
-
-    DOWNLOAD_GENOME_ANNOTATIONS.out | BUILD_RSEM
+    genome_annotations | BUILD_RSEM
 
     ALIGN_STAR.out.transcriptomeMapping | combine( BUILD_RSEM.out ) | set { aligned_ch }
     aligned_ch | COUNT_ALIGNED

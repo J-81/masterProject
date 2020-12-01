@@ -5,7 +5,7 @@
 process BUILD_STAR {
   conda "${baseDir}/envs/star.yml"
   storeDir "${params.storeDirPath}/STAR_${ params.ensembl_version }"
-  label 'maxCPU'
+  label 'maxCPU','big_mem'
 
   input:
     tuple path(genomeFasta), path(genomeGtf)
@@ -15,7 +15,7 @@ process BUILD_STAR {
     """
 STAR --runThreadN ${task.cpus} \
 --runMode genomeGenerate \
---limitGenomeGenerateRAM 35000000000 \
+--limitGenomeGenerateRAM ${ task.memory.toBytes() } \
 --genomeSAindexNbases 14 \
 --genomeDir STAR_REF \
 --genomeFastaFiles ${ genomeFasta } \
@@ -32,7 +32,7 @@ STAR --runThreadN ${task.cpus} \
 
 process ALIGN_STAR {
   conda "${baseDir}/envs/star.yml"
-  label 'maxCPU'
+  label 'maxCPU','big_mem'
 
   input:
     tuple val(sampleID), path(forward_read), path(reverse_read), path(STAR_INDEX_DIR)
@@ -44,7 +44,7 @@ process ALIGN_STAR {
   script:
     """
     STAR --twopassMode Basic \
-    --limitBAMsortRAM 65000000000 \
+    --limitBAMsortRAM ${ task.memory.toBytes() } \
     --outFilterType BySJout \
     --outSAMunmapped Within \
     --genomeDir ${ STAR_INDEX_DIR } \

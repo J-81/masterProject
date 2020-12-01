@@ -30,7 +30,14 @@ workflow GET_DATA {
 
 workflow {
 	main:
-    GET_DATA( samples_ch ) | RAW_FASTQC
+    if ( params.raw_reads ) {
+      raw_reads_ch = Channel.from( params.raw_reads )
+                            .map { row -> [ row[0], [ file(row[1][0], checkIfExists: true), file(row[1][1], checkIfExists: true) ] ] }
+    } else {
+      GET_DATA( samples_ch ) | set { raw_reads_ch }
+    }
+     raw_reads_ch | view
+     raw_reads_ch | RAW_FASTQC
 
     RAW_FASTQC.out | map { it -> [ it[1], it[2] ] } \
                    | flatten \
@@ -39,7 +46,7 @@ workflow {
                    | RAW_MULTIQC \
                    | view
 
-    GET_DATA.out | map{ it -> [ it[0], it[1][0], it[1][1] ] } | TRIMGALORE
+    raw_reads_ch | map{ it -> [ it[0], it[1][0], it[1][1] ] } | TRIMGALORE
 
     TRIMGALORE.out.reads | map{ it -> [ it[0], [ it[1], it[2] ] ]} | TRIM_FASTQC
 
@@ -67,8 +74,8 @@ workflow {
 
     COUNT_ALIGNED.out.countsPerGene | map { it[1] } | collect | toList | set { rsem_ch }
 
-    isa_ch = channel.fromPath("external/GLDS-104_metadata_GLDS-104-ISA.zip")
-    organism_ch = channel.fromPath("external/organisms.csv")
+    isa_ch = channel.fromPath( params.ISAZip)
+    organism_ch = channel.fromPath( params.organismCSV )
     external_ch = isa_ch.combine( organism_ch )
 
     external_ch | combine( rsem_ch ) | set { for_dge_ch }

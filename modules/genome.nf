@@ -5,7 +5,8 @@
 process BUILD_STAR {
   conda "${baseDir}/envs/star.yml"
   storeDir "${params.storeDirPath}/STAR_${ params.ensembl_version }"
-  label 'maxCPU','big_mem'
+  label 'maxCPU'
+  label 'big_mem'
 
   input:
     tuple path(genomeFasta), path(genomeGtf)
@@ -32,7 +33,8 @@ STAR --runThreadN ${task.cpus} \
 
 process ALIGN_STAR {
   conda "${baseDir}/envs/star.yml"
-  label 'maxCPU','big_mem'
+  label 'maxCPU'
+  label 'big_mem'
 
   input:
     tuple val(sampleID), path(forward_read), path(reverse_read), path(STAR_INDEX_DIR)

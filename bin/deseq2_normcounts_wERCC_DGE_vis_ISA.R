@@ -115,10 +115,12 @@ ercc_dds <- ercc_dds[,colSums(counts(ercc_dds)) > 0]
 
 ##### generate a DESeqDataSet object using only non-ERCC genes
 dds_1 <- dds[-c(ercc_rows),] # remove ERCCs from full counts table
-dds_2 <- dds_1
+dds_2 <- dds
+
+
 
 # replace size factor object with ERCC size factors for rescaling
-dds_2 <- estimateSizeFactors(dds_2, controlGenes=counts(ercc_dds)/100)
+dds_2 <- estimateSizeFactors(dds_2, controlGenes=ercc_rows)
 
 #### Perform DESeq analysis
 dds_2 <- estimateDispersions(dds_2)

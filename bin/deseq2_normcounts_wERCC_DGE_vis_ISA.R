@@ -1,22 +1,34 @@
+#! /usr/bin/env Rscript
 library(tximport)
 library(DESeq2)
 library(tidyverse)
 library(Risa)
 
-organism <- "MOUSE"
+################################################################################
+# Retrieve args from commandline
+################################################################################
+args = commandArgs(trailingOnly=TRUE)
+print("ARGS")
+print(args)
 
-metadata_dir="/netapp/disk1/Data_Processing/RNAseq_Datasets/GLDS_datasets/GLDS-194/Metadata"
-work_dir="/netapp/disk1/Data_Processing/RNAseq_Datasets/GLDS_datasets/GLDS-194/processing_scripts/04-05-DESeq2_NormCounts_DGE"
-counts_dir="/netapp/disk1/Data_Processing/RNAseq_Datasets/GLDS_datasets/GLDS-194/03-RSEM_Counts"
-norm_output="/netapp/disk1/Data_Processing/RNAseq_Datasets/GLDS_datasets/GLDS-194/04-DESeq2_NormCounts"
-DGE_output="/netapp/disk1/Data_Processing/RNAseq_Datasets/GLDS_datasets/GLDS-194/05-DESeq2_DGE"
-DGE_output_ERCC="/netapp/disk1/Data_Processing/RNAseq_Datasets/GLDS_datasets/GLDS-194/05-DESeq2_DGE/ERCC_NormDGE"
+organism <- args[1]
 
-setwd(file.path(metadata_dir))
+#MOD#metadata_dir=arg[2]
+Isa_zip=args[2]
+#END_MOD#
+work_dir=getwd()
+#REMOVE_MOD#counts_dir=args[4]
+norm_output=args[3]
+DGE_output=args[4]
+DGE_output_ERCC=args[5]
+
+#setwd(file.path(metadata_dir))
 
 # Load comparison table
 td = tempdir()
-unzip(Sys.glob(file.path(metadata_dir,"*ISA.zip")), exdir = td)
+#MOD#unzip(Sys.glob(file.path(metadata_dir,"*ISA.zip")), exdir = td)
+unzip(file.path(Isa_zip), exdir = td)
+#END_MOD#
 isa <- readISAtab(path = td)
 n = as.numeric(which(isa@assay.technology.types == "RNA Sequencing (RNA-Seq)"))
 isa_tabs<-isa@assay.tabs[[n]]@assay.file

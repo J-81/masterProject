@@ -41,7 +41,6 @@ colnames(study) <- colnames(compare_csv)[2:dim(compare_csv)[2]]
 rownames(study) <- compare_csv[,1]
 
 
-setwd(file.path(work_dir))
 
 #study <- read.csv(Sys.glob(file.path(work_dir,"*metadata.csv")), header = TRUE, row.names = 1, stringsAsFactors = TRUE)
 

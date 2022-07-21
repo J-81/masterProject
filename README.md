@@ -1,4 +1,5 @@
-- Note from Jonathan
+# Note from Jonathan
+
 This project is archived at the state it was in upon graduation.
 Since graduating, I have been happy to continue development on this workflow for while working on the NASA GeneLab team.
 You can reach out to me at Jonathan.d.oribello@nasa.gov for the most recent development on this workflow.

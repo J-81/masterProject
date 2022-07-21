@@ -1,3 +1,9 @@
+- Note from Jonathan
+This project is archived at the state it was in upon graduation.
+Since graduating, I have been happy to continue development on this workflow for while working on the NASA GeneLab team.
+You can reach out to me at Jonathan.d.oribello@nasa.gov for the most recent development on this workflow.
+
+
 # NASA Pipeline: GL-DPPD-7101-C
 
 This is a nextflow implementation of a NASA bioinformatics pipeline for Jonathan Oribello's Bioinformatics Master's Project.
